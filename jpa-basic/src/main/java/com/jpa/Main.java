@@ -1,5 +1,7 @@
 package com.jpa;
 
+import com.jpa.doamin.Member;
+import com.jpa.doamin.Team;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -44,6 +46,31 @@ public class Main {
 //            System.out.println("===========");
 //            em.persist(test);
 //            System.out.println("===========");
+
+            Team teamA = new Team();
+            teamA.setName("TeamA");
+            em.persist(teamA);
+
+            Member member = new Member();
+            member.setName("member1");
+//            member.setTeamId(team.getId());
+            member.setTeam(teamA);
+            em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            Member findMember = em.find(Member.class, member.getId());
+//            Long findMemberTeamId = findMember.getTeamId();
+//            Team findTeam = em.find(Team.class, findMemberTeamId);
+            Team findTeam = findMember.getTeam();
+            System.out.println("findTeam = " + findTeam.getName());
+
+            Team teamB = new Team();
+            teamB.setName("TeamB");
+            em.persist(teamB);
+
+            findMember.setTeam(teamB);
 
             tx.commit();
         } catch (Exception e) {
