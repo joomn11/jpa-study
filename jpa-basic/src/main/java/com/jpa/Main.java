@@ -2,6 +2,7 @@ package com.jpa;
 
 import com.jpa.doamin.Member;
 import com.jpa.doamin.Team;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -71,6 +72,11 @@ public class Main {
             em.persist(teamB);
 
             findMember.setTeam(teamB);
+
+            List<Member> findMembers = teamB.getMembers();
+            for (Member m : findMembers) {
+                System.out.println("m.getName() = " + m.getName());
+            }
 
             tx.commit();
         } catch (Exception e) {
