@@ -1,7 +1,7 @@
 package com.jpa;
 
-import com.jpa.doamin.Member;
-import com.jpa.doamin.Team;
+import com.jpa.sample.Member;
+import com.jpa.sample.Team;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
