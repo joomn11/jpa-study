@@ -29,4 +29,10 @@ public class Member {
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team team;
+
+    public void changeTeam(Team team) { // 편의 메서드 제공
+        this.team.getMembers().remove(this);
+        this.setTeam(team);
+        team.getMembers().add(this);
+    }
 }

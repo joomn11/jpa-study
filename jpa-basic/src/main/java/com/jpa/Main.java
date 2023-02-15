@@ -58,25 +58,20 @@ public class Main {
             member.setTeam(teamA);
             em.persist(member);
 
-            em.flush();
-            em.clear();
+//            teamA.getMembers().add(member); //연관 관계 주인이 아닌 곳에 추가해도 DB에 반영되지 않는다.. 순수한 객체 관게를 고려한다면 양쪽다 모두 넣야주어야 한다
 
-            Member findMember = em.find(Member.class, member.getId());
-//            Long findMemberTeamId = findMember.getTeamId();
-//            Team findTeam = em.find(Team.class, findMemberTeamId);
-            Team findTeam = findMember.getTeam();
-            System.out.println("findTeam = " + findTeam.getName());
+//            em.flush();
+//            em.clear();
 
-            Team teamB = new Team();
-            teamB.setName("TeamB");
-            em.persist(teamB);
-
-            findMember.setTeam(teamB);
-
-            List<Member> findMembers = teamB.getMembers();
-            for (Member m : findMembers) {
+            Team findTeam = em.find(Team.class, teamA.getId());
+            List<Member> members = findTeam.getMembers();
+            System.out.println("=========");
+            for (Member m : members) {
                 System.out.println("m.getName() = " + m.getName());
             }
+            System.out.println("=========");
+
+            em.clear();
 
             tx.commit();
         } catch (Exception e) {
