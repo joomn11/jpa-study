@@ -2,7 +2,6 @@ package com.jpa;
 
 import com.jpa.sample.Member;
 import com.jpa.sample.Team;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -54,24 +53,11 @@ public class Main {
 
             Member member = new Member();
             member.setName("member1");
-//            member.setTeamId(team.getId());
-            member.setTeam(teamA);
             em.persist(member);
 
-//            teamA.getMembers().add(member); //연관 관계 주인이 아닌 곳에 추가해도 DB에 반영되지 않는다.. 순수한 객체 관게를 고려한다면 양쪽다 모두 넣야주어야 한다
+            teamA.getMembers().add(member);
 
-//            em.flush();
 //            em.clear();
-
-            Team findTeam = em.find(Team.class, teamA.getId());
-            List<Member> members = findTeam.getMembers();
-            System.out.println("=========");
-            for (Member m : members) {
-                System.out.println("m.getName() = " + m.getName());
-            }
-            System.out.println("=========");
-
-            em.clear();
 
             tx.commit();
         } catch (Exception e) {

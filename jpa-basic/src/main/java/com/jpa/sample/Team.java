@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,11 +23,12 @@ public class Team {
 
     private String name;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany
+    @JoinColumn(name = "TEAM_ID")
     List<Member> members = new ArrayList<>();
 
-    public void addMember(Member member) {
-        this.members.add(member);
-        member.setTeam(this);
-    }
+//    public void addMember(Member member) {
+//        this.members.add(member);
+//        member.setTeam(this);
+//    }
 }
