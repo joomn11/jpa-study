@@ -1,7 +1,6 @@
 package com.jpa;
 
-import com.jpa.sample.Member;
-import com.jpa.sample.Team;
+import com.jpa.mapping.Album;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -47,18 +46,28 @@ public class Main {
 //            em.persist(test);
 //            System.out.println("===========");
 
-            Team teamA = new Team();
-            teamA.setName("TeamA");
-            em.persist(teamA);
+//            Team teamA = new Team();
+//            teamA.setName("TeamA");
+//            em.persist(teamA);
+//
+//            Member member = new Member();
+//            member.setName("member1");
+//            em.persist(member);
+//
+//            teamA.getMembers().add(member);
 
-            Member member = new Member();
-            member.setName("member1");
-            em.persist(member);
+            Album album = new Album();
+            album.setName("A");
+            album.setArtist("ARTI");
+            album.setPrice(100);
+            em.persist(album);
 
-            teamA.getMembers().add(member);
+            em.flush();
+            em.clear();
 
-//            em.clear();
-
+            Album findAlbum = em.find(Album.class, album.getId());
+            System.out.println("findAlbum = " + findAlbum.getName());
+            
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
