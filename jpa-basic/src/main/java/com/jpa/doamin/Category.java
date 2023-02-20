@@ -1,5 +1,6 @@
 package com.jpa.doamin;
 
+import com.jpa.sample.BaseEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Category {
+public class Category extends BaseEntity {
 
     @Id
     @GeneratedValue

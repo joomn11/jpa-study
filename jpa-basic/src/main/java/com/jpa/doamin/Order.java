@@ -1,5 +1,6 @@
 package com.jpa.doamin;
 
+import com.jpa.sample.BaseEntity;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ import lombok.Setter;
 @Table(name = "ORDERS")
 @Getter
 @Setter
-public class Order {
+public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue

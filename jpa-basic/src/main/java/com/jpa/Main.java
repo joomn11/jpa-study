@@ -61,13 +61,20 @@ public class Main {
             album.setArtist("ARTI");
             album.setPrice(100);
             em.persist(album);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Album findAlbum = em.find(Album.class, album.getId());
+//            System.out.println("findAlbum = " + findAlbum.getName());
 
-            em.flush();
-            em.clear();
+//            Member member = new Member();
+//            member.setName("user1");
+//            member.setCreatedBy("userA");
+//            member.setCreatedDate(LocalDateTime.now());
+//
+//            em.persist(member);
 
-            Album findAlbum = em.find(Album.class, album.getId());
-            System.out.println("findAlbum = " + findAlbum.getName());
-            
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
