@@ -1,6 +1,7 @@
 package com.jpa;
 
 import com.jpa.sample.Member;
+import com.jpa.sample.Team;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -42,13 +43,24 @@ public class Main {
 //            em.persist(test);
 //            System.out.println("===========");
 
-//            Team teamA = new Team();
-//            teamA.setName("TeamA");
-//            em.persist(teamA);
+            Team teamA = new Team();
+            teamA.setName("TeamA");
+            em.persist(teamA);
 //
             Member member = new Member();
             member.setName("member1");
+            member.setTeam(teamA);
             em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            Member findMember = em.find(Member.class, member.getId());
+            System.out.println("findMember.getTeam() = " + findMember.getTeam().getClass());
+
+            System.out.println("===========");
+            System.out.println("findMember.getTeam().getName() = " + findMember.getTeam().getName());
+            System.out.println("===========");
 
 //            teamA.getMembers().add(member);
 
@@ -58,42 +70,42 @@ public class Main {
 //            album.setPrice(100);
 //            em.persist(album);
 //
-            em.flush();
-            em.clear();
-
-            System.out.println("== find first ==");
-            Member findMember = em.find(Member.class, member.getId());
-            Member refMember = em.getReference(Member.class, member.getId());
-            System.out.println("refMember = " + refMember.getClass());
-            System.out.println("findMember = " + findMember.getClass());
-
-            System.out.println("findMember == refMember  " + (findMember == refMember)); // eventually , this value should be equal !
-
-            em.flush();
-            em.clear();
-
-            System.out.println("== ref first ==");
-            Member refMember1 = em.getReference(Member.class, member.getId());
-            System.out.println("isLoaded : " + emf.getPersistenceUnitUtil().isLoaded(refMember1));
-            Member findMember1 = em.find(Member.class, member.getId());
-            System.out.println("isLoaded : " + emf.getPersistenceUnitUtil().isLoaded(refMember1));
-
-            System.out.println("findMember.id=" + refMember.getId());
-            System.out.println("findMember.name=" + refMember.getName());
-
-            System.out.println("refMember1 = " + refMember1.getClass());
-            System.out.println("refMember1-name = " + refMember1.getClass().getName());
-            System.out.println("findMember1 = " + findMember1.getClass());
-
-            em.flush();
-            em.clear();
-
-            System.out.println("== detech test ==");
-            Member refMember2 = em.getReference(Member.class, member.getId());
-
-            em.detach(refMember2);
-
-            refMember2.getName();
+//            em.flush();
+//            em.clear();
+//
+//            System.out.println("== find first ==");
+//            Member findMember = em.find(Member.class, member.getId());
+//            Member refMember = em.getReference(Member.class, member.getId());
+//            System.out.println("refMember = " + refMember.getClass());
+//            System.out.println("findMember = " + findMember.getClass());
+//
+//            System.out.println("findMember == refMember  " + (findMember == refMember)); // eventually , this value should be equal !
+//
+//            em.flush();
+//            em.clear();
+//
+//            System.out.println("== ref first ==");
+//            Member refMember1 = em.getReference(Member.class, member.getId());
+//            System.out.println("isLoaded : " + emf.getPersistenceUnitUtil().isLoaded(refMember1));
+//            Member findMember1 = em.find(Member.class, member.getId());
+//            System.out.println("isLoaded : " + emf.getPersistenceUnitUtil().isLoaded(refMember1));
+//
+//            System.out.println("findMember.id=" + refMember.getId());
+//            System.out.println("findMember.name=" + refMember.getName());
+//
+//            System.out.println("refMember1 = " + refMember1.getClass());
+//            System.out.println("refMember1-name = " + refMember1.getClass().getName());
+//            System.out.println("findMember1 = " + findMember1.getClass());
+//
+//            em.flush();
+//            em.clear();
+//
+//            System.out.println("== detech test ==");
+//            Member refMember2 = em.getReference(Member.class, member.getId());
+//
+//            em.detach(refMember2);
+//
+//            refMember2.getName();
 
 //            Album findAlbum = em.find(Album.class, album.getId());
 //            System.out.println("findAlbum = " + findAlbum.getName());
