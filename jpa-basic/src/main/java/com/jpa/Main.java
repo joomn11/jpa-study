@@ -1,7 +1,7 @@
 package com.jpa;
 
-import com.jpa.sample.Member;
-import com.jpa.sample.Team;
+import com.jpa.proxy.Child;
+import com.jpa.proxy.Parent;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -43,24 +43,24 @@ public class Main {
 //            em.persist(test);
 //            System.out.println("===========");
 
-            Team teamA = new Team();
-            teamA.setName("TeamA");
-            em.persist(teamA);
+//            Team teamA = new Team();
+//            teamA.setName("TeamA");
+//            em.persist(teamA);
 //
-            Member member = new Member();
-            member.setName("member1");
-            member.setTeam(teamA);
-            em.persist(member);
-
-            em.flush();
-            em.clear();
-
-            Member findMember = em.find(Member.class, member.getId());
-            System.out.println("findMember.getTeam() = " + findMember.getTeam().getClass());
-
-            System.out.println("===========");
-            System.out.println("findMember.getTeam().getName() = " + findMember.getTeam().getName());
-            System.out.println("===========");
+//            Member member = new Member();
+//            member.setName("member1");
+//            member.setTeam(teamA);
+//            em.persist(member);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Member findMember = em.find(Member.class, member.getId());
+//            System.out.println("findMember.getTeam() = " + findMember.getTeam().getClass());
+//
+//            System.out.println("===========");
+//            System.out.println("findMember.getTeam().getName() = " + findMember.getTeam().getName());
+//            System.out.println("===========");
 
 //            teamA.getMembers().add(member);
 
@@ -116,6 +116,31 @@ public class Main {
 //            member.setCreatedDate(LocalDateTime.now());
 //
 //            em.persist(member);
+
+            Parent parent = new Parent();
+            parent.setName("P1");
+
+            Child child1 = new Child();
+            Child child2 = new Child();
+            child1.setName("Ch1");
+            child2.setName("Ch2");
+
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            em.persist(parent);
+            em.persist(child1);
+            em.persist(child2);
+
+            em.flush();
+            em.clear();
+
+            Parent findParent = em.find(Parent.class, parent.getId());
+            findParent.getChildList().remove(0);
+//            em.remove(findParent);
+
+            em.flush();
+            em.clear();
 
             tx.commit();
         } catch (Exception e) {
