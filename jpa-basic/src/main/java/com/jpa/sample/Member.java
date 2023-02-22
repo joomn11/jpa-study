@@ -1,12 +1,14 @@
 package com.jpa.sample;
 
+import com.jpa.valuetype.Address;
+import com.jpa.valuetype.Period;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +17,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "SAMPLE_MEMBER")
-public class Member extends BaseEntity {
+//public class Member extends BaseEntity {
+public class Member {
 
     @Id
     @GeneratedValue
@@ -28,12 +31,12 @@ public class Member extends BaseEntity {
 //    @Column(name = "TEAM_ID")
 //    private Long teamId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @ManyToOne
-//    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
-    @JoinColumn(name = "TEAM_ID")
-    private Team team;
+//    @ManyToOne(fetch = FetchType.EAGER)
+////    @ManyToOne(fetch = FetchType.LAZY)
+////    @ManyToOne
+////    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
+//    @JoinColumn(name = "TEAM_ID")
+//    private Team team;
 
 //    @OneToOne
 //    @JoinColumn(name = "LOCKER_ID")
@@ -51,4 +54,17 @@ public class Member extends BaseEntity {
 //        this.setTeam(team);
 //        team.getMembers().add(this);
 //    }
+
+    @Embedded
+    private Period workPeriod;
+
+    @Embedded
+    private Address homeAddress;
+
+    @Embedded
+    @AttributeOverrides({@AttributeOverride(name = "street", column = @Column(name = "work_street")),
+        @AttributeOverride(name = "city", column = @Column(name = "work_city")),
+        @AttributeOverride(name = "zipcode", column = @Column(name = "work_zipcode"))})
+    private Address workAddress;
+
 }
