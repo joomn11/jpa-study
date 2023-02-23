@@ -1,7 +1,10 @@
 package com.jpa;
 
-import com.jpa.proxy.Child;
-import com.jpa.proxy.Parent;
+import com.jpa.sample.Member;
+import com.jpa.valuetype.Address;
+import com.jpa.valuetype.AddressEntity;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -117,30 +120,78 @@ public class Main {
 //
 //            em.persist(member);
 
-            Parent parent = new Parent();
-            parent.setName("P1");
+//            Parent parent = new Parent();
+//            parent.setName("P1");
+//
+//            Child child1 = new Child();
+//            Child child2 = new Child();
+//            child1.setName("Ch1");
+//            child2.setName("Ch2");
+//
+//            parent.addChild(child1);
+//            parent.addChild(child2);
+//
+//            em.persist(parent);
+//            em.persist(child1);
+//            em.persist(child2);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Parent findParent = em.find(Parent.class, parent.getId());
+//            findParent.getChildList().remove(0);
+////            em.remove(findParent);
+//
+//            em.flush();
+//            em.clear();
 
-            Child child1 = new Child();
-            Child child2 = new Child();
-            child1.setName("Ch1");
-            child2.setName("Ch2");
+//            Address address = new Address("city", "street", "100");
+//            Member member = new Member();
+//            member.setName("member");
+//            member.setHomeAddress(address);
+//            em.persist(member);
+//
+//            Address add2 = new Address(address.getCity(), address.getStreet(), address.getZipcode());
+//            Member member2 = new Member();
+//            member2.setName("member2");
+//            member2.setHomeAddress(add2);
+//            em.persist(member2);
+//
+//            member.getHomeAddress().setCity("newCity");
 
-            parent.addChild(child1);
-            parent.addChild(child2);
+            Member member = new Member();
+            member.setName("member");
+            member.getFavoriteFoods().add("apple");
+            member.getFavoriteFoods().add("banana");
+            member.getFavoriteFoods().add("fineapple");
 
-            em.persist(parent);
-            em.persist(child1);
-            em.persist(child2);
+            Address address = new Address("city", "street", "100");
+            Address address2 = new Address("city2", "street", "100");
+            member.getAddressHistory().add(new AddressEntity(address));
+            member.getAddressHistory().add(new AddressEntity(address2));
+
+            em.persist(member);
 
             em.flush();
             em.clear();
 
-            Parent findParent = em.find(Parent.class, parent.getId());
-            findParent.getChildList().remove(0);
-//            em.remove(findParent);
+            Member findMember = em.find(Member.class, member.getId());
 
-            em.flush();
-            em.clear();
+            List<AddressEntity> addressHistory = findMember.getAddressHistory();
+            for (AddressEntity addressHis : addressHistory) {
+                System.out.println("addressHis = " + addressHis.getAddress().getCity());
+            }
+
+            Set<String> favoriteFoods = findMember.getFavoriteFoods();
+            for (String favoriteFood : favoriteFoods) {
+                System.out.println("favoriteFood = " + favoriteFood);
+            }
+
+//            favoriteFoods.remove("apple");
+//            favoriteFoods.add("peer");
+
+            addressHistory.remove(new AddressEntity(new Address("city", "street", "100")));
+            addressHistory.add(new AddressEntity(new Address("citynew2", "street", "100")));
 
             tx.commit();
         } catch (Exception e) {
