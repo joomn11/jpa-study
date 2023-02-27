@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+@Entity(name = "ZMember")
 @Getter
 @Setter
 @Table(name = "Z_MEMBER")
@@ -30,4 +30,12 @@ public class Member {
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
+    @Override
+    public String toString() {
+        return "Member{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", age=" + age +
+            '}';
+    }
 }
