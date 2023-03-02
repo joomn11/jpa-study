@@ -1,5 +1,6 @@
 package com.jpa.jpql;
 
+import com.jpa.RoleType;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -57,22 +58,54 @@ public class JpqlMain {
 //            MemberDto oo = resultList.get(0);
 //            System.out.println("oo = " + oo.getName());
 
-            for (int i = 0; i < 100; i++) {
-                Member member = new Member();
-                member.setName("userNameParam" + i);
-                member.setAge(i);
-                em.persist(member);
-            }
+//            for (int i = 0; i < 100; i++) {
+//                Member member = new Member();
+//                member.setName("userNameParam" + i);
+//                member.setAge(i);
+//                em.persist(member);
+//            }
+//
+//            List<Member> resultList = em.createQuery("select m from ZMember m order by m.age desc ", Member.class)
+//                                        .setFirstResult(10)
+//                                        .setMaxResults(10)
+//                                        .getResultList();
+//
+//            for (Member member1 : resultList) {
+//                System.out.println("member1 = " + member1);
+//            }
+            Team team = new Team();
+            team.setName("team1");
+            em.persist(team);
 
-            List<Member> resultList = em.createQuery("select m from ZMember m order by m.age desc ", Member.class)
-                                        .setFirstResult(10)
-                                        .setMaxResults(10)
+            Member member = new Member();
+            member.setName("userNameParam1");
+            member.setAge(20);
+            member.setRole(RoleType.ADMIN);
+            member.setTeam(team);
+
+            Member member2 = new Member();
+            member2.setName("userNameParam2");
+            member2.setAge(30);
+
+            em.persist(member);
+            em.persist(member2);
+
+            em.flush();
+            em.clear();
+//            String query = "select m from ZMember m JOIN m.team t ";
+//            String query = "select m from ZMember m LEFT JOIN m.team t ";
+//            String query = "select m from ZMember m, ZTeam t";
+//            String query = "select m from ZMember m LEFT JOIN m.team t on t.name=:tname";
+//            String query = "select m from ZMember m JOIN m.team t on t.name=:tname";
+            String query = "select m from ZMember m JOIN m.team t where m.role=:roleType";
+
+            List<Member> resultList = em.createQuery(query, Member.class)
+                                        .setParameter("roleType", RoleType.ADMIN)
                                         .getResultList();
 
             for (Member member1 : resultList) {
                 System.out.println("member1 = " + member1);
             }
-
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();

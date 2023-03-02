@@ -1,10 +1,8 @@
 package com.jpa;
 
-import com.jpa.sample.Member;
-import com.jpa.valuetype.Address;
-import com.jpa.valuetype.AddressEntity;
+import com.jpa.mapping.Album;
+import com.jpa.mapping.Item;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -159,40 +157,55 @@ public class Main {
 //
 //            member.getHomeAddress().setCity("newCity");
 
-            Member member = new Member();
-            member.setName("member");
-            member.getFavoriteFoods().add("apple");
-            member.getFavoriteFoods().add("banana");
-            member.getFavoriteFoods().add("fineapple");
-
-            Address address = new Address("city", "street", "100");
-            Address address2 = new Address("city2", "street", "100");
-            member.getAddressHistory().add(new AddressEntity(address));
-            member.getAddressHistory().add(new AddressEntity(address2));
-
-            em.persist(member);
-
-            em.flush();
-            em.clear();
-
-            Member findMember = em.find(Member.class, member.getId());
-
-            List<AddressEntity> addressHistory = findMember.getAddressHistory();
-            for (AddressEntity addressHis : addressHistory) {
-                System.out.println("addressHis = " + addressHis.getAddress().getCity());
-            }
-
-            Set<String> favoriteFoods = findMember.getFavoriteFoods();
-            for (String favoriteFood : favoriteFoods) {
-                System.out.println("favoriteFood = " + favoriteFood);
-            }
+//            Member member = new Member();
+//            member.setName("member");
+//            member.getFavoriteFoods().add("apple");
+//            member.getFavoriteFoods().add("banana");
+//            member.getFavoriteFoods().add("fineapple");
+//
+//            Address address = new Address("city", "street", "100");
+//            Address address2 = new Address("city2", "street", "100");
+//            member.getAddressHistory().add(new AddressEntity(address));
+//            member.getAddressHistory().add(new AddressEntity(address2));
+//
+//            em.persist(member);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Member findMember = em.find(Member.class, member.getId());
+//
+//            List<AddressEntity> addressHistory = findMember.getAddressHistory();
+//            for (AddressEntity addressHis : addressHistory) {
+//                System.out.println("addressHis = " + addressHis.getAddress().getCity());
+//            }
+//
+//            Set<String> favoriteFoods = findMember.getFavoriteFoods();
+//            for (String favoriteFood : favoriteFoods) {
+//                System.out.println("favoriteFood = " + favoriteFood);
+//            }
 
 //            favoriteFoods.remove("apple");
 //            favoriteFoods.add("peer");
 
-            addressHistory.remove(new AddressEntity(new Address("city", "street", "100")));
-            addressHistory.add(new AddressEntity(new Address("citynew2", "street", "100")));
+//            addressHistory.remove(new AddressEntity(new Address("city", "street", "100")));
+//            addressHistory.add(new AddressEntity(new Address("citynew2", "street", "100")));
 
+            Album album = new Album();
+            album.setName("A");
+            album.setArtist("ARTI");
+            album.setPrice(100);
+            em.persist(album);
+
+            em.flush();
+            em.clear();
+
+            List<Item> result = em.createQuery("select m from Item as m where type(m) = Album ", Item.class)
+                                  .getResultList();
+
+            for (Item favoriteFood : result) {
+                System.out.println("favoriteFood = " + favoriteFood.getName());
+            }
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
