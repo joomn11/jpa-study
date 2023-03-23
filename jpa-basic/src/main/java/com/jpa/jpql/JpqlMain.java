@@ -1,6 +1,5 @@
 package com.jpa.jpql;
 
-import com.jpa.RoleType;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -73,38 +72,53 @@ public class JpqlMain {
 //            for (Member member1 : resultList) {
 //                System.out.println("member1 = " + member1);
 //            }
-            Team team = new Team();
-            team.setName("team1");
-            em.persist(team);
 
+//            Team team = new Team();
+//            team.setName("team1");
+//            em.persist(team);
+//
             Member member = new Member();
-            member.setName("userNameParam1");
+            member.setName(null);
             member.setAge(20);
-            member.setRole(RoleType.ADMIN);
-            member.setTeam(team);
-
-            Member member2 = new Member();
-            member2.setName("userNameParam2");
-            member2.setAge(30);
-
+//            member.setRole(RoleType.ADMIN);
+//            member.setTeam(team);
+//
+//            Member member2 = new Member();
+//            member2.setName("userNameParam2");
+//            member2.setAge(30);
+//
             em.persist(member);
-            em.persist(member2);
-
+//            em.persist(member2);
+//
             em.flush();
             em.clear();
+
 //            String query = "select m from ZMember m JOIN m.team t ";
 //            String query = "select m from ZMember m LEFT JOIN m.team t ";
 //            String query = "select m from ZMember m, ZTeam t";
 //            String query = "select m from ZMember m LEFT JOIN m.team t on t.name=:tname";
 //            String query = "select m from ZMember m JOIN m.team t on t.name=:tname";
-            String query = "select m from ZMember m JOIN m.team t where m.role=:roleType";
+//            String query = "select m from ZMember m JOIN m.team t where m.role=:roleType";
+//
+//            List<Member> resultList = em.createQuery(query, Member.class)
+//                                        .setParameter("roleType", RoleType.ADMIN)
+//                                        .getResultList();
+//
+//            for (Member member1 : resultList) {
+//                System.out.println("member1 = " + member1);
+//            }
 
-            List<Member> resultList = em.createQuery(query, Member.class)
-                                        .setParameter("roleType", RoleType.ADMIN)
-                                        .getResultList();
-
-            for (Member member1 : resultList) {
-                System.out.println("member1 = " + member1);
+//            String query =
+//                "select "
+//                    + "case when m.age <= 10 then 'Student Cost' "
+//                    + "when m.age >= 60 then 'Older Cost' "
+//                    + "else 'nomal Cost' "
+//                    + "end "
+//                    + "from ZMember m";
+            String query = "select coalesce(m.name, 'No Name User') from ZMember m";
+            List<String> result = em.createQuery(query, String.class).getResultList();
+            for (String s : result) {
+                System.out.println("s = " + s);
             }
             tx.commit();
         } catch (Exception e) {

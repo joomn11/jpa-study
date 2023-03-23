@@ -3,12 +3,20 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+      <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
-        <module name="ex-hellp-jpa" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.26/8f8cf0372abf564913e9796623aac4c8ea44025a/lombok-1.18.26.jar" />
+        </processorPath>
+        <module name="jpa-study.jpa-basic.test" />
+        <module name="jpa-study.jpa-basic.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="ex-hellp-jpa" target="1.8" />
+      <module name="jpa-study.buildSrc" target="11" />
+      <module name="jpa-study.buildSrc.main" target="11" />
+      <module name="jpa-study.buildSrc.test" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
