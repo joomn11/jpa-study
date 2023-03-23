@@ -4,4 +4,4 @@
 
 rootProject.name = 'jpa-study'
 
-include 'jpa-basic'
+include 'jpa-basic', 'jpashop'

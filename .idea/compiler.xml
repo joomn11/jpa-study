@@ -10,6 +10,7 @@
         </processorPath>
         <module name="jpa-study.jpa-basic.test" />
         <module name="jpa-study.jpa-basic.main" />
+        <module name="jpa-study.jpashop.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
