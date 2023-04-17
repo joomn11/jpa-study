@@ -71,8 +71,6 @@ o
 ?jpashop/src/main/java/jpabook/jpashop/web/MemberController.java,a/6/a6a14caa83725116473951ddf21e6351c59eeae5
 g
 7jpashop/src/main/java/jpabook/jpashop/web/BookForm.java,3/2/32048b0adb8ed956522110763447398e27cfd142
-u
-Ejpashop/src/main/java/jpabook/jpashop/repository/OrderRepository.java,1/0/102c01a87c1905428f162446c528fecb8bb9d383
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302

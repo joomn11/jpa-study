@@ -71,8 +71,6 @@ m
 =jpashop/src/main/java/jpabook/jpashop/web/HomeController.java,7/a/7a49094f791a60aca7f07bd74aee98bca9cad528
 o
 ?jpashop/src/main/java/jpabook/jpashop/web/MemberController.java,a/6/a6a14caa83725116473951ddf21e6351c59eeae5
-u
-Ejpashop/src/main/java/jpabook/jpashop/repository/OrderRepository.java,1/0/102c01a87c1905428f162446c528fecb8bb9d383
 n
 >jpashop/src/main/java/jpabook/jpashop/service/ItemService.java,6/8/68d39540da557f43f800070e29d7ca28fd6260a6
 m
