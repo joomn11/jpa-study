@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ public class Delivery {
     private Long id;
 
     @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Order order;
 
     @Embedded

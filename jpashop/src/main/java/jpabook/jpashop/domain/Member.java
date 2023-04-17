@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -26,5 +27,6 @@ public class Member {
     private Address address;
 
     @OneToMany(mappedBy = "member")
+    @JsonIgnore
     private List<Order> orders = new ArrayList<>();
 }
