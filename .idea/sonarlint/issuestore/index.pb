@@ -45,8 +45,6 @@ j
 :jpashop/src/main/java/jpabook/jpashop/HelloController.java,4/5/45fd1823ebb3e8ee0778e5578adeb116a681ab86
 r
 Bjpashop/src/test/java/jpabook/jpashop/JpashopApplicationTests.java,1/e/1e16970a39c6a29fc3ab666df232b9c6bcce6b95
-v
-Fjpashop/src/main/java/jpabook/jpashop/repository/MemberRepository.java,6/f/6fbcafb7bdc7d9ca965d9f721206d53487aa191e
 o
 ?jpashop/src/test/java/jpabook/jpashop/MemberRepositoryTest.java,9/a/9a75ad8b695536420f52836a3ca4f4a8fa316d42
 l
@@ -74,8 +72,6 @@ g
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
-B
-jpashop/.gitignore,4/2/42633f44b07758cf0e489a5afbd89fcbf0e9b0b8
 m
 =jpashop/src/main/java/jpabook/jpashop/web/ItemController.java,3/d/3d9a965b8022926f44ee14ca933dcc50534b3fd2
 n

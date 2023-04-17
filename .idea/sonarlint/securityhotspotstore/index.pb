@@ -47,8 +47,6 @@ l
 settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
 C
 jpashop/gradlew.bat,8/f/8ff2ad7e87876307ecc1bde7f31cd10b1f0ce075
-v
-Fjpashop/src/main/java/jpabook/jpashop/repository/MemberRepository.java,6/f/6fbcafb7bdc7d9ca965d9f721206d53487aa191e
 `
 0jpashop/gradle/wrapper/gradle-wrapper.properties,a/a/aa6d5bc43332236f15ad6560b8dac4821331ebb3
 ?
@@ -78,5 +76,3 @@ m
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
-B
-jpashop/.gitignore,4/2/42633f44b07758cf0e489a5afbd89fcbf0e9b0b8
