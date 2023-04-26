@@ -100,4 +100,14 @@ public class OrderRepository {
 
         return em.createQuery(jpql, Order.class).getResultList();
     }
+
+    public List<Order> findAllWithItem() {
+        String jpql = "select distinct o From Order o "
+            + "join fetch o.member m "
+            + "join fetch o.delivery d "
+            + "join fetch o.orderItems oi "
+            + "join fetch oi.item i ";
+
+        return em.createQuery(jpql, Order.class).getResultList();
+    }
 }
