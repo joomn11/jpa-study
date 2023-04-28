@@ -110,4 +110,13 @@ public class OrderRepository {
 
         return em.createQuery(jpql, Order.class).getResultList();
     }
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        String jpql = "select o From Order o join fetch o.member m join fetch o.delivery d";
+
+        return em.createQuery(jpql, Order.class)
+                 .setFirstResult(offset)
+                 .setMaxResults(limit)
+                 .getResultList();
+    }
 }
