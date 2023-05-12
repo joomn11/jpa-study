@@ -24,3 +24,7 @@ gradle-app.setting
 .classpath
 
 **/.idea/
+
+### IntelliJ IDEA ###
+.idea
+.idea/sonarlint/

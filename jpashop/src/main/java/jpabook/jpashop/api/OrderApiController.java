@@ -87,7 +87,12 @@ public class OrderApiController {
         List<OrderFlatDto> flats = orderQueryRepository.findAllByDto_flat();
 
         return flats.stream()
-                    .collect(Collectors.groupingBy(OrderQueryDto::create, Collectors.mapping(OrderItemQueryDto::create, Collectors.toList())))
+                    .collect(
+                        Collectors.groupingBy(
+                            OrderQueryDto::create,
+                            Collectors.mapping(OrderItemQueryDto::create, Collectors.toList())
+                        )
+                    )
                     .entrySet().stream()
                     .map(OrderQueryDto::create)
                     .collect(Collectors.toList());
