@@ -2,13 +2,21 @@ package study.datajpa.repository;
 
 
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.assertj.core.api.Assertions;
+import org.hibernate.Hibernate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.entity.Member;
+import study.datajpa.entity.Team;
 
 @SpringBootTest
 @Transactional
@@ -17,6 +25,12 @@ class MemberRepositoryTest {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    TeamRepository teamRepository;
+
+    @PersistenceContext
+    EntityManager em;
 
     @Test
     void testMember() {
@@ -98,5 +112,88 @@ class MemberRepositoryTest {
 
         Assertions.assertThat(result.size()).isEqualTo(1);
         Assertions.assertThat(result.get(0)).isEqualTo(user1);
+    }
+
+    @Test
+    public void page() throws Exception {
+        // given
+        memberRepository.save(new Member("member1", 10));
+        memberRepository.save(new Member("member2", 10));
+        memberRepository.save(new Member("member3", 10));
+        memberRepository.save(new Member("member4", 10));
+        memberRepository.save(new Member("member5", 10));
+
+        // when
+        PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Direction.DESC, "username"));
+        Page<Member> page = memberRepository.findByAge(10, pageRequest);
+
+        // then
+        List<Member> content = page.getContent();
+        Assertions.assertThat(content.size()).isEqualTo(3); // 조회 데이터
+        Assertions.assertThat(page.getTotalElements()).isEqualTo(5); // 전체 데이터 수
+        Assertions.assertThat(page.getNumber()).isEqualTo(0); // 페이지 번호
+        Assertions.assertThat(page.getTotalPages()).isEqualTo(2); // 전체 페이지 수
+        Assertions.assertThat(page.isFirst()).isTrue(); // 첫번째 페이지 인가?
+        Assertions.assertThat(page.hasNext()).isTrue(); // 다음 페이지가 있나?
+    }
+
+    @Test
+    public void bulkUpdate() throws Exception {
+        // given
+        memberRepository.save(new Member("member1", 10));
+        memberRepository.save(new Member("member2", 19));
+        memberRepository.save(new Member("member3", 20));
+        memberRepository.save(new Member("member4", 21));
+        memberRepository.save(new Member("member5", 40));
+
+        // when
+        int resultCount = memberRepository.bulkAgePlus(20);
+
+        // then
+        Assertions.assertThat(resultCount).isEqualTo(3);
+    }
+
+    @Test
+    public void findMemberLazy() throws Exception {
+        // given
+        // member1 -> teamA
+        // member2 -> teamB
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+        memberRepository.save(new Member("member1", 10, teamA));
+        memberRepository.save(new Member("member2", 20, teamB));
+
+        em.flush();
+        em.clear();
+
+        // when
+        List<Member> members = memberRepository.findAll();
+
+        // then
+        for (Member member : members) {
+            boolean initialized = Hibernate.isInitialized(member.getTeam());
+            System.out.println("member is initialized : " + initialized);
+
+            member.getTeam().getName();
+
+            boolean loaded = em.getEntityManagerFactory().getPersistenceUnitUtil().isLoaded(member.getTeam());
+            System.out.println("member is loaded : " + loaded);
+        }
+    }
+
+    @Test
+    public void queryHint() throws Exception {
+        // given
+        memberRepository.save(new Member("member1", 10));
+        em.flush();
+        em.clear();
+
+        // when
+        Member member = memberRepository.findReadOnlyByUsername("member1");
+        member.setUsername("member2");
+
+        em.flush(); // update is not excuted !
     }
 }
