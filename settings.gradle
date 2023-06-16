@@ -4,4 +4,4 @@
 
 rootProject.name = 'jpa-study'
 
-include 'jpa-basic', 'jpashop', 'data-jpa'
+include 'jpa-basic', 'jpashop', 'data-jpa', 'querydsl'
