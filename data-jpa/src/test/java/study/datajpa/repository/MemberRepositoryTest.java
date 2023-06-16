@@ -196,4 +196,9 @@ class MemberRepositoryTest {
 
         em.flush(); // update is not excuted !
     }
+
+    @Test
+    public void customImplTest() {
+        List<Member> memberCustom = memberRepository.findMemberCustom();
+    }
 }
